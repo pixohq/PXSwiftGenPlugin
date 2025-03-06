@@ -10,11 +10,11 @@ namespace :spm do
   task :test_command do |task|
     Utils.print_header 'Running `generate-code-for-resources` test'
     
-    File.delete?('swiftgen.yml') if File.exists?('swiftgen.yml')
+    File.delete?('swiftgen.yml') if File.exist?('swiftgen.yml')
     Utils.run('swift package --allow-writing-to-package-directory generate-code-for-resources config init', task, xcrun: true)
 
     # check result
-    if File.exists?('swiftgen.yml')
+    if File.exist?('swiftgen.yml')
       File.delete('swiftgen.yml')
       puts 'Test successful!'
     else

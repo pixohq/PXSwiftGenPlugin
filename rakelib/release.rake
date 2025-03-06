@@ -14,7 +14,7 @@ end
 
 namespace :release do
   desc 'Create a new release'
-  task :new => [:check_versions, :confirm, 'spm:test_command', :github]
+  task :new => [:check_versions, :confirm, :github]
 
   desc 'Check if all versions from the podspecs and CHANGELOG match'
   task :check_versions do
