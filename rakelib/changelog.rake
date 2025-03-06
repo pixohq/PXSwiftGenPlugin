@@ -50,25 +50,25 @@ namespace :changelog do
     end
   end
 
-  LINKS_SECTION_TITLE = 'Changes in core dependencies of SwiftGenPlugin'
+  LINKS_SECTION_TITLE = 'Changes in core dependencies of PXSwiftGenPlugin'
 
-  desc 'Add links to other CHANGELOGs in the topmost SwiftGen CHANGELOG entry'
+  desc 'Add links to other CHANGELOGs in the topmost PXSwiftGen CHANGELOG entry'
   task :links do
     changelog = File.read('CHANGELOG.md')
     topmost = /^### (.*)/.match(changelog) || ['', '']
     abort('Links seems to already exist for latest version entry') if topmost[1] == LINKS_SECTION_TITLE
     links = linked_changelogs(
-      swiftgen: Utils.swiftgen_version
+      pxswiftgen: Utils.pxswiftgen_version
     )
     changelog.sub!(/^##[^#].*$\n/, "\\0\n#{links}")
     File.write('CHANGELOG.md', changelog)
   end
 
-  def linked_changelogs(swiftgen: nil)
+  def linked_changelogs(pxswiftgen: nil)
     <<-LINKS.gsub(/^\s*\|/, '')
       |### #{LINKS_SECTION_TITLE}
       |
-      |* [SwiftGen #{swiftgen}](https://github.com/SwiftGen/SwiftGen/blob/#{swiftgen}/CHANGELOG.md)
+      |* [PXSwiftGen #{pxswiftgen}](https://github.com/pixohq/PXSwiftGen/blob/#{pxswiftgen}/CHANGELOG.md)
     LINKS
   end
 end

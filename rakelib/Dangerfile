@@ -8,7 +8,7 @@ is_hotfix = github.branch_for_head.start_with?('hotfix/')
 ################################################
 # Welcome message
 markdown [
-  "Hey 👋 I'm Eve, the friendly bot watching over SwiftGen 🤖",
+  "Hey 👋 I'm Eve, the friendly bot watching over PXSwiftGen 🤖",
   'Thanks a lot for your contribution!',
   '', '---', ''
 ]

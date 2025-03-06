@@ -55,6 +55,6 @@ namespace :release do
 
     repo_name = File.basename(`git remote get-url origin`.chomp, '.git').freeze
     puts "Pushing release notes for tag #{tag}"
-    client.create_release("SwiftGen/#{repo_name}", tag, name: tag, body: body)
+    client.create_release("pixohq/#{repo_name}", tag, name: tag, body: body)
   end
 end

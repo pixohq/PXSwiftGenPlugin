@@ -1,5 +1,5 @@
 //
-// SwiftGenPlugin
+// PXSwiftGenPlugin
 // Copyright © 2022 SwiftGen
 // MIT Licence
 //
@@ -8,7 +8,7 @@ import Foundation
 import PackagePlugin
 
 @main
-struct SwiftGenPlugin: BuildToolPlugin {
+struct PXSwiftGenPlugin: BuildToolPlugin {
   func createBuildCommands(context: PluginContext, target: Target) throws -> [Command] {
     let fileManager = FileManager.default
 
@@ -22,7 +22,7 @@ struct SwiftGenPlugin: BuildToolPlugin {
       return []
     }
 
-    // Clear the SwiftGen plugin's directory (in case of dangling files)
+    // Clear the PXSwiftGen plugin's directory (in case of dangling files)
     fileManager.forceClean(directory: context.pluginWorkDirectory)
 
     return try configurations.map { configuration in
@@ -33,12 +33,12 @@ struct SwiftGenPlugin: BuildToolPlugin {
 
 // MARK: - Helpers
 
-private extension SwiftGenPlugin {
+private extension PXSwiftGenPlugin {
   /// Validate the given list of configurations
   func validate(configurations: [Path], target: Target) -> Bool {
     guard !configurations.isEmpty else {
       Diagnostics.error("""
-      No SwiftGen configurations found for target \(target.name). If you would like to generate sources for this \
+      No PXSwiftGen configurations found for target \(target.name). If you would like to generate sources for this \
       target include a `swiftgen.yml` in the target's source directory, or include a shared `swiftgen.yml` at the \
       package's root.
       """)
@@ -52,8 +52,8 @@ private extension SwiftGenPlugin {
 private extension Command {
   static func swiftgen(using configuration: Path, context: PluginContext, target: Target) throws -> Command {
     .prebuildCommand(
-      displayName: "SwiftGen BuildTool Plugin",
-      executable: try context.tool(named: "swiftgen").path,
+      displayName: "PXSwiftGen BuildTool Plugin",
+      executable: try context.tool(named: "pxswiftgen").path,
       arguments: [
         "config",
         "run",

@@ -18,12 +18,12 @@ BUILD_DIR = File.absolute_path('./.build')
 ## [ Build Tasks ] ############################################################
 
 namespace :spm do
-  desc "Update SwiftGen in Package.swift"
+  desc "Update PXSwiftGen in Package.swift"
   task :update_swiftgen, [:version] do |task, args|
     require 'octokit'
 
     client = Utils.octokit_client
-    release = client.latest_release('SwiftGen/SwiftGen')
+    release = client.latest_release('pixohq/PXSwiftGen')
     asset = release.assets.find { |a| a.name.end_with? '.artifactbundle.zip' }
 
     raise 'Release asset not found' if asset.nil?

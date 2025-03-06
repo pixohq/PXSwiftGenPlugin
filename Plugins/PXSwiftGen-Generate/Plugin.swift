@@ -1,5 +1,5 @@
 //
-// SwiftGenPlugin
+// PXSwiftGenPlugin
 // Copyright © 2022 SwiftGen
 // MIT Licence
 //
@@ -8,9 +8,9 @@ import Foundation
 import PackagePlugin
 
 @main
-struct SwiftGenPlugin: CommandPlugin {
+struct PXSwiftGenPlugin: CommandPlugin {
   func performCommand(context: PluginContext, arguments: [String]) async throws {
-    let swiftgen = try context.tool(named: "swiftgen")
+    let swiftgen = try context.tool(named: "pxswiftgen")
     let fileManager = FileManager.default
 
     // if user provided arguments, use those
@@ -35,7 +35,7 @@ struct SwiftGenPlugin: CommandPlugin {
   }
 }
 
-private extension SwiftGenPlugin {
+private extension PXSwiftGenPlugin {
   // Environment content for correct code generation
   func env(context: PluginContext, target: SourceModuleTarget? = nil) -> [String: String] {
     [
