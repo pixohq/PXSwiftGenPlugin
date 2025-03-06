@@ -12,7 +12,7 @@ let package = Package(
     .plugin(
       name: "PXSwiftGenPlugin",
       capability: .buildTool(),
-      dependencies: ["pxswiftgen"]
+      dependencies: ["swiftgen"]
     ),
     .plugin(
       name: "PXSwiftGen-Generate",
@@ -25,12 +25,12 @@ let package = Package(
           .writeToPackageDirectory(reason: "This command generates source code")
         ]
       ),
-      dependencies: ["pxswiftgen"]
+      dependencies: ["swiftgen"]
     ),
     .binaryTarget(
-      name: "pxswiftgen",
+      name: "swiftgen",
       url: "https://github.com/pixohq/PXSwiftGen/releases/download/1.0.0/swiftgen-1.0.0.artifactbundle.zip",
-      checksum: "7586363e24edcf18c2da3ef90f379e9559c1453f48ef5e8fbc0b818fbbc3a045"
+      checksum: "524081e8c7614e84bc9e93ef52f189cfe342b796551318b170a18869f7e60198"
     )
   ]
 )
