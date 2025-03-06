@@ -10,7 +10,7 @@ import PackagePlugin
 @main
 struct SwiftGenPlugin: CommandPlugin {
   func performCommand(context: PluginContext, arguments: [String]) async throws {
-    let swiftgen = try context.tool(named: "swiftgen")
+    let swiftgen = try context.tool(named: "pxswiftgen")
     let fileManager = FileManager.default
     
     let configuration = context.package.directory.appending("swiftgen.yml")
