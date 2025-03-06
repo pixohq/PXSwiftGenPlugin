@@ -1,5 +1,5 @@
 //
-// PXSwiftGenPlugin
+// SwiftGenPlugin
 // Copyright © 2022 SwiftGen
 // MIT Licence
 //
@@ -8,41 +8,50 @@ import Foundation
 import PackagePlugin
 
 @main
-struct PXSwiftGenPlugin: CommandPlugin {
+struct SwiftGenPlugin: CommandPlugin {
   func performCommand(context: PluginContext, arguments: [String]) async throws {
-    let swiftgen = try context.tool(named: "pxswiftgen")
+    let swiftgen = try context.tool(named: "swiftgen")
     let fileManager = FileManager.default
+    
+    let configuration = context.package.directory.appending("swiftgen.yml")
+    if fileManager.fileExists(atPath: configuration.string) {
+      try swiftgen.run(configuration, environment: env(context: context))
+    }
 
-    // if user provided arguments, use those
-    if !arguments.isEmpty {
-      try swiftgen.run(arguments: arguments, environment: env(context: context))
-    } else {
-      // otherwise scan for configs
-      let configuration = context.package.directory.appending("swiftgen.yml")
+    // check each target
+    let targetsFromArgs = parseTargets(arguments)
+    let targets = context.package.targets
+      .compactMap { $0 as? SourceModuleTarget }
+      .filter { targetsFromArgs.isEmpty || targetsFromArgs.contains($0.name) }
+    for target in targets {
+      let configuration = target.directory.appending("swiftgen.yml")
       if fileManager.fileExists(atPath: configuration.string) {
-        try swiftgen.run(configuration, environment: env(context: context))
-      }
-
-      // check each target
-      let targets = context.package.targets.compactMap { $0 as? SourceModuleTarget }
-      for target in targets {
-        let configuration = target.directory.appending("swiftgen.yml")
-        if fileManager.fileExists(atPath: configuration.string) {
-          try swiftgen.run(configuration, environment: env(context: context, target: target))
-        }
+        try swiftgen.run(configuration, environment: env(context: context, target: target))
       }
     }
   }
 }
 
-private extension PXSwiftGenPlugin {
+private extension SwiftGenPlugin {
   // Environment content for correct code generation
   func env(context: PluginContext, target: SourceModuleTarget? = nil) -> [String: String] {
     [
       "PROJECT_DIR": context.package.directory.string,
       "TARGET_NAME": target?.name ?? "",
-      "PRODUCT_MODULE_NAME": target?.moduleName ?? ""
+      "PRODUCT_MODULE_NAME": target?.moduleName ?? "",
+      "DERIVED_SOURCES_DIR": context.pluginWorkDirectory.string
     ]
+  }
+    
+  func parseTargets(_ arguments: [String]) -> [String] {
+    var result = [String]()
+    for (i, arg) in arguments.enumerated() where arg == "--target" {
+      let valueIdx = i + 1
+      if valueIdx < arguments.count {
+        result.append(arguments[valueIdx])
+      }
+    }
+    return result
   }
 }
 
