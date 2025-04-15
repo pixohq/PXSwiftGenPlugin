@@ -29,8 +29,8 @@ let package = Package(
     ),
     .binaryTarget(
       name: "pxswiftgen",
-      url: "https://github.com/pixohq/PXSwiftGen/releases/download/1.0.4/pxswiftgen-1.0.4.artifactbundle.zip",
-      checksum: "a3746d027695406a7f3385c6fd6028b6d61e14a41230a5f40a71168b6bd91cc4"
+      url: "https://github.com/pixohq/PXSwiftGen/releases/download/1.1.0/pxswiftgen-1.1.0.artifactbundle.zip",
+      checksum: "cfcd6c01575027189ffda689244582ad8cd39b999d382e61e9f283e1e4034135"
     )
   ]
 )
